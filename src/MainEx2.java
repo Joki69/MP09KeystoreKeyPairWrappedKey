@@ -52,6 +52,7 @@ public class MainEx2 {
 
         //2.2
         // Genera una nueva clave simétrica
+        System.out.println("Ahora se creara una nueva clave simtrica:");
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256);
         SecretKey secretKey = keyGen.generateKey();
@@ -59,7 +60,8 @@ public class MainEx2 {
         // Guarda la clave simétrica en el KeyStore
         KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(secretKey);
         KeyStore.ProtectionParameter protParam = new KeyStore.PasswordProtection(ksPwd.toCharArray());
-        ks.setEntry(keyAlias, entry, protParam);
+        System.out.println("Introduce el alias para las nuevas claves:");
+        ks.setEntry(scanner.nextLine(), entry, protParam);
 
         // Guarda el KeyStore en el archivo
         FileOutputStream out = new FileOutputStream(ksFile);
