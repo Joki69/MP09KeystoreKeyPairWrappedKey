@@ -1,14 +1,39 @@
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Scanner;
 
 public class MainEx21 {
+    public static void main(String[] args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        RandomGenerate randomGenerate = new RandomGenerate();
 
+        // Generar un par de claves RSA de 2048 bits
+        KeyPair keyPair = randomGenerate.randomGenerate(2048);
+        PrivateKey privateKey = keyPair.getPrivate();
+        PublicKey publicKey = keyPair.getPublic();
 
+        // Define los datos a firmar
+        System.out.println("Introduce el mensaje a firmar");
+        String message = scanner.nextLine();
+        byte[] data = message.getBytes("UTF-8");
 
+        // Cifrar los datos con clave simétrica envuelta con clave pública
+        byte[][] encWrappedData = encryptWrappedData(data, publicKey);
 
+        // Descifrar los datos con clave simétrica envuelta con clave privada
+        byte[] decData = decryptWrappedData(encWrappedData, privateKey);
+
+        // Imprimir resultados
+        System.out.println("Mensaje original: " + message);
+        System.out.println("Mensaje cifrado: " + new String(encWrappedData[0]));
+        System.out.println("Clave simétrica cifrada con clave pública: " + new String(encWrappedData[1]));
+        System.out.println("Mensaje descifrado: " + new String(decData));
+
+    }
 
     public static byte[][] encryptWrappedData(byte[] data, PublicKey pub) {
         byte[][] encWrappedData = new byte[2][];
