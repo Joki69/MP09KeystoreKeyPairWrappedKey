@@ -19,9 +19,7 @@ public class MainEx4 {
         // Alias of the key to extract the PublicKey from
         System.out.println("Introduce el alias");
         String keyAlias = scanner.nextLine();
-        // Password to access the key
-        System.out.println("Introduce la contra de la key");
-       // String keyPassword = scanner.nextLine();
+
 
         // Load the keystore
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
